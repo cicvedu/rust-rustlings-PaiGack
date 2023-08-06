@@ -1,0 +1,38 @@
+name: Rustlings Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: checkouttoml
+      run: curl -o check.toml https://raw.githubusercontent.com/livstyle/os-autograding-rust/main/check.toml
+    # - name: Build
+    #   run: cargo build --release --verbose
+    - name: Run tests
+      run: cargo test --test check --verbose
+    - name: upload result
+      uses: actions/upload-artifact@v3
+      with:
+        name: check_result
+        path: ${{ github.workspace }}/.github/result/check_result.json
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npm start
