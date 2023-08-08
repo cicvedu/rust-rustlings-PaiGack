@@ -20,7 +20,7 @@ mod tests {
             .unwrap()
             .as_secs();
         // Set the environment variable
-        // std::env::set_var("TEST_FOO", timestamp.to_string());
+        std::env::set_var("TEST_FOO", timestamp.to_string());
 
         let s = std::env::var("TEST_FOO").unwrap();
         let e: u64 = s.parse().unwrap();
