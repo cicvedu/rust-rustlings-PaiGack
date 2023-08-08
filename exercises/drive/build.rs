@@ -4,7 +4,7 @@ fn main() {
         .unwrap()
         .as_secs();
     // Set the environment variable
-    std::env::set_var("TEST_FOO", (timestamp + 10).to_string());
+    std::env::set_var("TEST_FOO", (timestamp).to_string());
 
     // Add code here to enable the "pass" feature
     println!("cargo:rustc-cfg=feature=\"pass\"");
